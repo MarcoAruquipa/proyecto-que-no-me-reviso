@@ -23,7 +23,7 @@ if (!$db) {
 
 $mysqli = @new mysqli();
 if (getenv('DB_SSL')) {
-    @$mysqli->ssl_set(null, null, null, null, null, null);
+    @$mysqli->ssl_set(null, null, '/etc/ssl/certs/ca-certificates.crt', null, null, null);
     @$mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, false);
 }
 @$mysqli->real_connect($host, $user, $pass, $db, (int)$port);
