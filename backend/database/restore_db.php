@@ -21,7 +21,12 @@ if (!$db) {
     exit(0);
 }
 
-$mysqli = @new mysqli($host, $user, $pass, $db, (int)$port);
+$mysqli = @new mysqli();
+if (getenv('DB_SSL')) {
+    @$mysqli->ssl_set(null, null, null, null, null, null);
+    @$mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, false);
+}
+@$mysqli->real_connect($host, $user, $pass, $db, (int)$port);
 if ($mysqli->connect_errno) {
     echo "RESTORE_CONN_ERR: " . $mysqli->connect_error . "\n";
     exit(0);
